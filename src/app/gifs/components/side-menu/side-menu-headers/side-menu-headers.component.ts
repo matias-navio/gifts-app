@@ -5,4 +5,7 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './side-menu-headers.component.html'
 })
-export class SideMenuHeadersComponent { }
+export class SideMenuHeadersComponent {
+
+
+}
