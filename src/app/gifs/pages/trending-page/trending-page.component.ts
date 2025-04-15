@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { GiftListComponent } from "../../components/gift-list/gift-list.component";
 
 const imageUrls: string[] = [
@@ -20,6 +20,8 @@ const imageUrls: string[] = [
   selector: 'app-trending-page',
   imports: [GiftListComponent],
   templateUrl: './trending-page.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class TrendingPageComponent { }
+export default class TrendingPageComponent {
+
+  gifs = imageUrls;
+}
