@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GiftListComponent } from "../../components/gift-list/gift-list.component";
 import { GifService } from '../../services/gifs.service';
 
