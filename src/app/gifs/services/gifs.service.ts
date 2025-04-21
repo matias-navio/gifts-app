@@ -1,10 +1,10 @@
 import { Gif } from './../interfaces/gif.interface';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import type { GiphyResponse } from '../interfaces/giphyinterface';
 import { GifMapper } from '../mapper/gif.mapper';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class GifService {
@@ -18,6 +18,12 @@ export class GifService {
 
   // señal de gifs que buscamos
   searchGif = signal<Gif[]>([]);
+
+  // señal de tipo record con una llave string y un valor que es un arreglo de Gif
+  // ejemplo: {'goku': [gif1, gif2, gif3]}
+  searchHistory = signal<Record<string, Gif[]>>({});
+  // esto va a guardar las keys de lo que busque el usuario
+  searchHistoryKeys = computed(() => Object.keys(this.searchHistory()));
 
   constructor(){
     this.loadTrendingGifs();
@@ -56,7 +62,15 @@ export class GifService {
       // operador de rxjs para agarrar el valor obtenido y cambiarlo por algo
       map(({data}) => data),
       // obtenemos los gifs y a lo transformamos con mapper
-      map((items) => GifMapper.mapGiphyItemsToArray(items))
+      map((items) => GifMapper.mapGiphyItemsToArray(items)),
+
+      // historial de busqueda
+      tap(items => {
+        this.searchHistory.update(history => ({
+          ...history,
+          [query.toLowerCase()]: items,
+        }))
+      })
     );
   }
 }
