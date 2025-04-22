@@ -14,11 +14,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./gifs/pages/trending-page/trending-page.component'),
       },
-      // primera ruta hija '/dashboard/search'
+      // segunda ruta hija '/dashboard/search'
       {
         path: 'search',
         loadComponent: () =>
           import('./gifs/pages/search-page/search-page.component'),
+      },
+      // tercera ruta hija '/dashboard/history/?' para historial de busqueda
+      {
+        // con los dos puntos se hace dinamica
+        path: 'history/:query',
+        loadComponent: () =>
+          import('./gifs/pages/gif-history/gif-history.component'),
       },
       // ruta default en cas de no encontrar dentro de /dashboard
       {
